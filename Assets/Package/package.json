@@ -1,0 +1,14 @@
+{
+    "name": "io.finalclick.unity-object-reference",
+    "displayName": "FinalClick - Unity Object Referencing",
+    "author": {
+        "name": "FinalClick",
+        "url": "https://github.com/FinalClick"
+    },
+    "keywords": [
+    ],
+    "version": "1.0.0",
+    "unity": "6000.0",
+    "description": "Serializable type which can reference a Unity Object via interface types",
+    "dependencies": {}
+}

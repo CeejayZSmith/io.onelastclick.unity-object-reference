@@ -1,0 +1,19 @@
+{
+    "name": "FinalClick.UnityObjectReferencing.Editor",
+    "rootNamespace": "FinalClick.UnityObjectReferencing.Editor",
+    "references": [
+        "GUID:94fc4e7fe805427482aa3a6d3de9195c",
+        "GUID:4a48387f61d83e1439b55dfed86721af"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
