@@ -2,7 +2,7 @@
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace FinalClick.UnityObjectReferencing
+namespace OneFinalClick.UnityObjectReferencing
 {
     [Serializable]
     public abstract class UnityObjectReference
