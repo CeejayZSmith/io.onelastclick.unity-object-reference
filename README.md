@@ -1,6 +1,6 @@
-# FinalClick — Unity Object Reference
+# OneFinalClick — Unity Object Reference
 
-**Package:** `io.finalclick.unity-object-reference`
+**Package:** `io.onefinalclick.unity-object-reference`
 
 Serialize interfaces and base types in the Unity Inspector. Works with both scene objects and assets.
 
@@ -9,7 +9,7 @@ Serialize interfaces and base types in the Unity Inspector. Works with both scen
 Add the package to your `manifest.json`:
 
 ```json
-"io.finalclick.unity-object-reference": "https://github.com/FinalClick/io.finalclick.unity-object-reference?path=/Assets/Package"
+"io.onefinalclick.unity-object-reference": "https://github.com/OneFinalClick/io.onefinalclick.unity-object-reference?path=/Assets/Package"
 ```
 
 ## Usage
