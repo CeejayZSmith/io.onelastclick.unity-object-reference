@@ -1,6 +1,6 @@
 {
-    "name": "OneFinalClick.UnityObjectReferencing.Editor",
-    "rootNamespace": "OneFinalClick.UnityObjectReferencing.Editor",
+    "name": "OneLastClick.UnityObjectReferencing.Editor",
+    "rootNamespace": "OneLastClick.UnityObjectReferencing.Editor",
     "references": [
         "GUID:94fc4e7fe805427482aa3a6d3de9195c",
         "GUID:4a48387f61d83e1439b55dfed86721af"

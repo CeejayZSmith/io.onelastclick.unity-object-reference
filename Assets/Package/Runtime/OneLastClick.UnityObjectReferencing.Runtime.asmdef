@@ -1,6 +1,6 @@
 {
-    "name": "OneFinalClick.UnityObjectReferencing.Runtime",
-    "rootNamespace": "OneFinalClick.UnityObjectReferencing",
+    "name": "OneLastClick.UnityObjectReferencing.Runtime",
+    "rootNamespace": "OneLastClick.UnityObjectReferencing",
     "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],

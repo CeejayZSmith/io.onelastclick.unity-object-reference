@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace OneFinalClick.UnityObjectReferencing.Editor
+namespace OneLastClick.UnityObjectReferencing.Editor
 {
     [CustomPropertyDrawer(typeof(UnityObjectReference), true)]
     public class UnityObjectReferenceDrawer : PropertyDrawer

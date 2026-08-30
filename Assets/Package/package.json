@@ -1,9 +1,9 @@
 {
-    "name": "io.onefinalclick.unity-object-reference",
-    "displayName": "OneFinalClick - Unity Object Referencing",
+    "name": "io.onelastclick.unity-object-reference",
+    "displayName": "OneLastClick - Unity Object Referencing",
     "author": {
-        "name": "OneFinalClick",
-        "url": "io.onefinalclick"
+        "name": "OneLastClick",
+        "url": "docs.onelastclick.io"
     },
     "keywords": [
     ],
