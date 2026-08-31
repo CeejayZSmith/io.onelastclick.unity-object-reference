@@ -1,0 +1,14 @@
+{
+    "name": "Unity.OneLastClick.UnityObjectReference.CodeGen",
+    "rootNamespace": "OneLastClick.UnityObjectReferencing.ILPostProcessing",
+    "references": [],
+    "includePlatforms": ["Editor"],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
