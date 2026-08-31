@@ -1,49 +1,40 @@
-# OneFinalClick — Unity Object Reference
+# Unity Object Reference - [Full Documentation Here](https://docs.onelastclick.io/packages/unity-object-reference/start-here/getting-started/)
 
-**Package:** `io.onefinalclick.unity-object-reference`
 
-Serialize interfaces and base types in the Unity Inspector. Works with both scene objects and assets.
+Serialize **interfaces** directly in the Inspector.
+
+```csharp
+[SerializeField] IInterface _instance;
+
+_instance.DoSomething();
+```
+
+- No `SerializedReference<T>` like wrapper type required.
+- Reference to `ScriptableObject`, `MonoBehaviour`, or any `UnityEngine.Object` type.
+- Inspector Support and Validation
 
 ## Installation
 
-Add the package to your `manifest.json`:
+### Install via Unity Package Manager
+
+1. Open your Unity project.
+2. Go to **Window → Package Manager**.
+3. Click the **+** button in the top-left corner.
+4. Select **Add package from Git URL...**.
+5. Paste the following URL and click **Add**:
+
+```text
+https://github.com/OneLastClick/io.onelastclick.unity-object-reference?path=/Assets/Package
+```
+
+### Install via `manifest.json`
+
+If you prefer to manage packages manually, add the package to your project's `Packages/manifest.json` file under `dependencies`:
 
 ```json
-"io.onefinalclick.unity-object-reference": "https://github.com/OneFinalClick/io.onefinalclick.unity-object-reference?path=/Assets/Package"
+{
+  "dependencies": {
+    "io.onelastclick.unity-object-reference": "https://github.com/OneLastClick/io.onelastclick.unity-object-reference?path=/Assets/Package"
+  }
+}
 ```
-
-## Usage
-
-Reference an interface or base type with `UnityObjectReference<T>`.
-
-```csharp
-[SerializeField] UnityObjectReference<IPlayerCueInputProvider> _inputProvider;
-```
-
-Access the value through `.Value` or use the implicit conversion.
-
-```csharp
-_inputProvider.Value.DoSomething();
-
-// Implicit conversion
-IPlayerCueInputProvider input = _inputProvider;
-```
-
-## Supported References
-
-- Scene `MonoBehaviour` instances.
-- `ScriptableObject` assets.
-- Any `UnityEngine.Object` that implements the target interface or inherits the target base type.
-
-If you assign a `GameObject`, the drawer automatically finds a matching component on it.
-
-## Inspector
-
-The custom property drawer:
-
-- Accepts scene objects and assets.
-- Resolves matching components from `GameObject` references.
-- Displays the resolved object type.
-- Warns when the assigned object does not implement the required type.
-
-<img width="1696" height="88" alt="image" src="https://github.com/user-attachments/assets/a0c18304-e809-4d15-ad4c-7366046685e8" />
