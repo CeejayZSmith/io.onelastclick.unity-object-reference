@@ -34,7 +34,7 @@ If you prefer to manage packages manually, add the package to your project's `Pa
 ```json
 {
   "dependencies": {
-    "io.onelastclick.unity-object-reference": "https://github.com/OneLastClick/io.onelastclick.unity-object-reference?path=/Assets/Package"
+    "io.onelastclick.unity-object-reference": "https://github.com/ceejayzsmith/io.onelastclick.unity-object-reference?path=/Assets/Package"
   }
 }
 ```
