@@ -8,8 +8,8 @@ namespace OneLastClick.UnityObjectReferencing.Tests
         [Test]
         public void Interface_Reference_Resolves_Component()
         {
-            var go = new GameObject();
-            var component = go.AddComponent<TestComponent>();
+            GameObject go = new GameObject();
+            TestComponent component = go.AddComponent<TestComponent>();
 
             UnityObjectReference<ITestInterface> reference = component;
 
@@ -22,8 +22,8 @@ namespace OneLastClick.UnityObjectReferencing.Tests
         [Test]
         public void Interface_Returns_Same_Component_Instance()
         {
-            var go = new GameObject();
-            var component = go.AddComponent<TestComponent>();
+            GameObject go = new GameObject();
+            TestComponent component = go.AddComponent<TestComponent>();
 
             UnityObjectReference<ITestInterface> reference = component;
 

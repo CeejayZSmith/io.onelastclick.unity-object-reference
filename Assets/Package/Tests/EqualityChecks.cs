@@ -8,7 +8,7 @@ namespace OneLastClick.UnityObjectReferencing.Tests
         [Test]
         public void Two_References_To_Same_Object_Are_Equal()
         {
-            var go = new GameObject();
+            GameObject go = new GameObject();
 
             UnityObjectReference<GameObject> a = go;
             UnityObjectReference<GameObject> b = go;
@@ -22,8 +22,8 @@ namespace OneLastClick.UnityObjectReferencing.Tests
         [Test]
         public void Different_Objects_Are_Not_Equal()
         {
-            var aGo = new GameObject("A");
-            var bGo = new GameObject("B");
+            GameObject aGo = new GameObject("A");
+            GameObject bGo = new GameObject("B");
 
             UnityObjectReference<GameObject> a = aGo;
             UnityObjectReference<GameObject> b = bGo;
@@ -47,7 +47,7 @@ namespace OneLastClick.UnityObjectReferencing.Tests
         [Test]
         public void Equals_Underlying_Unity_Object()
         {
-            var go = new GameObject();
+            GameObject go = new GameObject();
 
             UnityObjectReference<GameObject> reference = go;
 

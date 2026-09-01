@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace OneLastClick.UnityObjectReferencing.Tests
@@ -28,5 +29,12 @@ namespace OneLastClick.UnityObjectReferencing.Tests
         public UnityObjectReference<TestComponent> Component;
         public UnityObjectReference<ITestInterface> Interface;
         public UnityObjectReference<TestScriptableObject> Scriptable;
+    }
+
+    [Serializable]
+    public struct SerializedInterfaceReferenceContainer
+    {
+        [SerializeField]
+        private ITestInterface _interface;
     }
 }

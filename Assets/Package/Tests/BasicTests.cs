@@ -20,8 +20,8 @@ namespace OneLastClick.UnityObjectReferencing.Tests
         [Test]
         public void Stores_And_Returns_Component()
         {
-            var go = new GameObject();
-            var component = go.AddComponent<TestComponent>();
+            GameObject go = new GameObject();
+            TestComponent component = go.AddComponent<TestComponent>();
 
             UnityObjectReference<TestComponent> reference = component;
 
@@ -33,7 +33,7 @@ namespace OneLastClick.UnityObjectReferencing.Tests
         [Test]
         public void Stores_And_Returns_ScriptableObject()
         {
-            var asset = ScriptableObject.CreateInstance<TestScriptableObject>();
+            TestScriptableObject asset = ScriptableObject.CreateInstance<TestScriptableObject>();
 
             UnityObjectReference<TestScriptableObject> reference = asset;
 
@@ -61,7 +61,7 @@ namespace OneLastClick.UnityObjectReferencing.Tests
         [Test]
         public void Implicit_Conversion_To_Object_Works()
         {
-            var go = new GameObject();
+            GameObject go = new GameObject();
 
             UnityObjectReference<GameObject> reference = go;
             GameObject result = reference;
