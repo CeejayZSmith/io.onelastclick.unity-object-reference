@@ -56,42 +56,10 @@ namespace OneLastClick.UnityObjectReferencing.ILPostProcessing
                     continue;
                 }
 
-                if (IsFieldAssignedOutsideOfInspector(type, field) == true)
-                {
-                    AddDiagnostic(diagnostics, DiagnosticType.Warning,
-                        $"Field '{Describe(field)}' is an interface-typed [SerializeField] " +
-                        "field that is assigned in code. This is currently not supported for interface serialization and will be skipped");
-                    continue;
-                }
-
-                
                 result.Add(field);
             }
 
             return result;
-        }
-        
-        private static bool IsFieldAssignedOutsideOfInspector(TypeDefinition type, FieldDefinition targetField)
-        {
-            foreach (MethodDefinition method in type.Methods)
-            {
-                if (!method.HasBody)
-                {
-                    continue;
-                }
-
-                foreach (Instruction instruction in method.Body.Instructions)
-                {
-                    if (instruction.OpCode == OpCodes.Stfld &&
-                        instruction.Operand is FieldReference fieldRef &&
-                        fieldRef.Resolve() == targetField)
-                    {
-                        return true;
-                    }
-                }
-            }
-
-            return false;
         }
         
         private static bool IsInterfaceType(TypeReference typeRef)

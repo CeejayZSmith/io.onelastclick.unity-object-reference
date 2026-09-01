@@ -61,7 +61,7 @@ namespace OneLastClick.UnityObjectReferencing.ILPostProcessing
                 return false;
             }
 
-            return TryRewriteAccessSites(module, allTargetFields, wrapperTypeDef, diagnostics);
+            return TryRewriteAccessSites(module, allTargetFields, wrapperTypeDef, resolver, diagnostics);
         }
 
         private bool TryRewriteFieldType(FieldDefinition field, ModuleDefinition module, TypeDefinition wrapperTypeDef, List<DiagnosticMessage> diagnostics)
@@ -81,21 +81,12 @@ namespace OneLastClick.UnityObjectReferencing.ILPostProcessing
             }
         }
 
-        private bool TryRewriteAccessSites(ModuleDefinition module, List<FieldDefinition> targetFields, TypeDefinition wrapperTypeDef, List<DiagnosticMessage> diagnostics)
+        private bool TryRewriteAccessSites(ModuleDefinition module, List<FieldDefinition> targetFields,
+            TypeDefinition wrapperTypeDef, IAssemblyResolver resolver, List<DiagnosticMessage> diagnostics)
         {
             if (targetFields.Count == 0)
             {
                 return true;
-            }
-
-            if (TryCreateValueAccessorsForUnityObjectReferenceValueProperty(
-                    module, 
-                    targetFields, 
-                    wrapperTypeDef,
-                    diagnostics, 
-                    out Dictionary<FieldDefinition, (MethodReference Getter, MethodReference Setter)> valueAccessors) == false)
-            {
-                return false;
             }
 
             foreach (TypeDefinition type in module.GetTypes())
@@ -108,10 +99,9 @@ namespace OneLastClick.UnityObjectReferencing.ILPostProcessing
                     }
 
                     ILProcessor il = method.Body.GetILProcessor();
-                    Collection<Instruction> instructions = method.Body.Instructions;
-
                     // Iterate over a copy because we'll modify the instruction list.
-                    for (int i = 0; i < instructions.Count; i++)
+                    Instruction[] instructions = method.Body.Instructions.ToArray();
+                    for (int i = 0; i < instructions.Length; i++)
                     {
                         Instruction instruction = instructions[i];
 
@@ -126,32 +116,34 @@ namespace OneLastClick.UnityObjectReferencing.ILPostProcessing
                             continue;
                         }
 
-                        if (valueAccessors.TryGetValue(fieldDef, out (MethodReference Getter, MethodReference Setter) accessors) == false)
+                        if (targetFields.Contains(fieldDef) == false)
                         {
                             continue;
                         }
-
+                        
                         switch (instruction.OpCode.Code)
                         {
                             // READ access
                             case Code.Ldfld:
-                            case Code.Ldsfld:
                             {
-                                // Replace READ access to field with UnityObjectReference<T>.Value property getter.
-                                Instruction call = il.Create(
-                                    instruction.OpCode.Code == Code.Ldfld ? OpCodes.Callvirt : OpCodes.Call,
-                                    accessors.Getter);
-                                il.InsertAfter(instruction, call);
-                            }
+                                AccessorReplacement.RewriteRead(
+                                    module, 
+                                    resolver, 
+                                    il, 
+                                    fieldDef, 
+                                    instruction);
                                 break;
+                            }
                             // WRITE access
                             case Code.Stfld:
-                            case Code.Stsfld:
                             {
-                                AddDiagnostic(
-                                    diagnostics,
-                                    DiagnosticType.Error,
-                                    $"Write access overriding is currently not supported. field: {Describe(fieldDef)}");
+                                AccessorReplacement.RewriteWrite(
+                                    module,
+                                    resolver,
+                                    il,
+                                    method,
+                                    fieldDef,
+                                    instruction);
                                 break;
                             }
                         }
@@ -160,60 +152,6 @@ namespace OneLastClick.UnityObjectReferencing.ILPostProcessing
             }
 
             return true;
-        }
-
-        private static bool TryCreateValueAccessorsForUnityObjectReferenceValueProperty(
-            ModuleDefinition module, 
-            List<FieldDefinition> targetFields, 
-            TypeDefinition wrapperTypeDef, 
-            List<DiagnosticMessage> diagnostics, 
-            out Dictionary<FieldDefinition, (MethodReference Getter, MethodReference Setter)> generatedValueAccessorsPerType)
-        {
-            bool allSuccess = true;
-            
-            generatedValueAccessorsPerType = new Dictionary<FieldDefinition, (MethodReference Getter, MethodReference Setter)>();
-
-            foreach (FieldDefinition field in targetFields)
-            {
-                try
-                {
-                    GenericInstanceType wrapperInstance = (GenericInstanceType)field.FieldType;
-
-                    PropertyDefinition valueProperty = wrapperTypeDef.Properties.First(p => p.Name == "Value");
-
-                    MethodReference getter = module.ImportReference(valueProperty.GetMethod);
-                    MethodReference setter = module.ImportReference(valueProperty.SetMethod);
-
-                    getter = MakeGenericMethod(getter, wrapperInstance);
-                    setter = MakeGenericMethod(setter, wrapperInstance);
-
-                    generatedValueAccessorsPerType[field] = (getter, setter);
-                }
-                catch (Exception ex)
-                {
-                    AddDiagnostic(diagnostics, DiagnosticType.Error, $"Failed to resolve Value property for '{Describe(field)}': {ex.Message}");
-                    allSuccess = false;
-                }
-            }
-
-            return allSuccess;
-        }
-
-        private static MethodReference MakeGenericMethod(MethodReference method, GenericInstanceType declaringType)
-        {
-            MethodReference reference = new MethodReference(method.Name, declaringType.Module.ImportReference(method.ReturnType), declaringType)
-            {
-                HasThis = method.HasThis,
-                ExplicitThis = method.ExplicitThis,
-                CallingConvention = method.CallingConvention
-            };
-
-            foreach (ParameterDefinition parameter in method.Parameters)
-            {
-                reference.Parameters.Add(new ParameterDefinition(declaringType.Module.ImportReference(parameter.ParameterType)));
-            }
-
-            return reference;
         }
 
         private static FieldDefinition ResolveField(FieldReference fieldReference)

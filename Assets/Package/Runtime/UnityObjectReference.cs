@@ -9,7 +9,7 @@ namespace OneLastClick.UnityObjectReferencing
     {
         [SerializeField] UnityEngine.Object _unityObject;
 
-        protected UnityEngine.Object UnityObject
+        internal UnityEngine.Object UnityObject
         {
             get => _unityObject;
             set => _unityObject = value;
@@ -76,7 +76,7 @@ namespace OneLastClick.UnityObjectReferencing
         public T Value
         {
             get => UnityObject as T;
-            set => UnityObject =  value as Object;
+            set => UnityObject = value as Object;
         }
 
         public static implicit operator T(UnityObjectReference<T> reference) => reference.Value;
@@ -87,5 +87,6 @@ namespace OneLastClick.UnityObjectReferencing
         {
             return typeof(T);
         }
+
     }
 }

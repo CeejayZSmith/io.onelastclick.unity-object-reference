@@ -36,5 +36,11 @@ namespace OneLastClick.UnityObjectReferencing.Tests
     {
         [SerializeField]
         private ITestInterface _interface;
+
+        public ITestInterface Interface
+        {
+            get => _interface;
+            set => _interface = value;
+        }
     }
 }
